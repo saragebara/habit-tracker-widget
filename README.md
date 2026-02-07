@@ -1,34 +1,46 @@
 # habit-tracker-widget
 
-An Electron application with React
+A lightweight, cross-platform desktop habit tracker built with **Electron**, **React**, **TypeScript**, and **Vite**.  
+This project is designed as a simple widget-style application that allows users to track daily habits directly from their desktop.
 
-## Recommended IDE Setup
+## Tech Stack
 
-- [VSCode](https://code.visualstudio.com/) + [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) + [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+- Electron 
+- React   
+- TypeScript   
+- Vite   
+- Node.js   
 
-## Project Setup
+## Features
 
-### Install
+- TBA
 
-```bash
-$ npm install
+## Prerequisites
+
+Ensure the following are installed:
+
+- Node.js (v18+ recommended)
+- npm
+
+Verify installation:
+```
+node -v
+npm -v
 ```
 
-### Development
+## Installation
 
-```bash
-$ npm run dev
+Clone the repository and install dependencies:
+```
+git clone https://github.com/saragebara/habit-tracker-widget.git
+cd habit-tracker-widget
+npm install
 ```
 
-### Build
+## Development
 
-```bash
-# For windows
-$ npm run build:win
+Run the application in development mode:
 
-# For macOS
-$ npm run build:mac
-
-# For Linux
-$ npm run build:linux
+```
+npm run dev
 ```
