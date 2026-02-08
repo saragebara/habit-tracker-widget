@@ -118,13 +118,14 @@ export default function App() {
     const map: Record<number, number> = {};
 
     for (const entry of heatmap) {
-      const date = new Date(entry.day);
+      // entry.day = "YYYY-MM-DD"
+      const [y, m, d] = entry.day.split("-").map(Number);
 
       if (
-        date.getFullYear() === year &&
-        date.getMonth() === month
+        y === year &&
+        m === month + 1 // month is 0-based
       ) {
-        map[date.getDate()] = entry.value;
+        map[d] = entry.value;
       }
     }
 
