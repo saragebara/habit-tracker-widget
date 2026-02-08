@@ -7,10 +7,10 @@ function createWindow() {
   const mainWindow = new BrowserWindow({
     width: 340,
     height: 360,
-    //transparent: true,
+    transparent: true,
     frame: false,
     //focusable: false,
-    resizable: true, //change this to false later
+    resizable: true, //does not impact app with transparent/frameless window
     //autoHideMenuBar: true,
     //...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
@@ -50,6 +50,24 @@ app.whenReady().then(() => {
   // see https://github.com/alex8088/electron-toolkit/tree/master/packages/utils
   app.on('browser-window-created', (_, window) => {
     optimizer.watchWindowShortcuts(window)
+  })
+
+  ipcMain.on('resize-window', (_, height) => {
+    const win = BrowserWindow.getFocusedWindow()
+    if (!win) return
+
+    const [currentWidth, currentHeight] = win.getSize()
+
+    //to prevent resizing loops/jitters that can happen
+    const MIN_HEIGHT = 300
+    const MAX_HEIGHT = 440
+
+    const clampedHeight = Math.min(MAX_HEIGHT, Math.max(MIN_HEIGHT, Math.ceil(height)))
+
+    //only resize if something happened
+    if (Math.abs(currentHeight - clampedHeight) > 2) {
+      win.setSize(currentWidth, clampedHeight, false)
+    }
   })
 
   // IPC test

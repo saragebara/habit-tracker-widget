@@ -1,10 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { mockHabits, getHabitsForMonth } from "./storage";
 
 export default function App() {
   const [currentMonth, setCurrentMonth] = useState(0);
   const [viewMode, setViewMode] = useState<'monthly' | 'weekly'>('monthly');
 
+  const appRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (!appRef.current) return;
+
+    const observer = new ResizeObserver(entries => {
+      const height = Math.ceil(entries[0].contentRect.height);
+
+      // @ts-ignore
+      if (window.api?.resizeWindow) {
+        window.api.resizeWindow(height);
+      }
+    });
+
+    observer.observe(appRef.current);
+
+    return () => observer.disconnect();
+  }, []);
+
+
+  //User clicks X
   const handleClose = () => {
     // @ts-ignore
     if (window.api && window.api.closeWindow) {
@@ -78,7 +98,7 @@ export default function App() {
   };
 
   return (
-    <div className="habit-tracker">
+    <div ref={appRef} className="habit-tracker">
       <div className="header">
         <button className="icon-button settings-button">
           <svg viewBox="0 0 24 24" fill="currentColor">

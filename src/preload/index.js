@@ -3,7 +3,8 @@ import { electronAPI } from '@electron-toolkit/preload'
 
 // Custom APIs for renderer
 const api = {
-  closeWindow: () => ipcRenderer.send('close-window')
+  closeWindow: () => ipcRenderer.send('close-window'),
+  resizeWindow: (height) => ipcRenderer.send('resize-window', height)
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to
