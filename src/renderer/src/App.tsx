@@ -93,6 +93,24 @@ export default function App() {
   const dates = viewMode === 'monthly' ? getMonthDates() : getWeekDates();
   const today = currentMonth === 0 ? new Date().getDate() : -1;
 
+  const handleNextMonth = () => {
+    setCurrentMonth(prev => prev + 1);
+  };
+
+  const monthData = React.useMemo(() => {
+    const map: Record<number, number> = {};
+
+    for (const entry of heatmap) {
+      const [y, m, d] = entry.day.split("-").map(Number);
+
+      if (y === year && m === month + 1) {
+        map[d] = entry.value;
+      }
+    }
+
+    return map;
+  }, [heatmap, year, month]);
+
   const getCountForDay = (day: number): number => {
     return monthData[day] ?? 0;
   };
@@ -109,24 +127,6 @@ export default function App() {
   const handlePrevMonth = () => {
     setCurrentMonth(prev => prev - 1);
   };
-
-  const handleNextMonth = () => {
-    setCurrentMonth(prev => prev + 1);
-  };
-
-  const monthData = React.useMemo(() => {
-  const map: Record<number, number> = {};
-
-  for (const entry of heatmap) {
-    const [y, m, d] = entry.day.split("-").map(Number);
-
-    if (y === year && m === month + 1) {
-      map[d] = entry.value;
-    }
-  }
-
-  return map;
-}, [heatmap, year, month]);
 
   const calculateDailyAverage = () => {
     const daysInMonth = new Date(year, month + 1, 0).getDate();
