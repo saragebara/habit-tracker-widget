@@ -5,12 +5,12 @@ import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 function createWindow() {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 500,
-    height: 650,
+    width: 340,
+    height: 360,
     //transparent: true,
     frame: false,
     //focusable: false,
-    resizable: false,
+    resizable: true, //change this to false later
     //autoHideMenuBar: true,
     //...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
@@ -54,6 +54,14 @@ app.whenReady().then(() => {
 
   // IPC test
   ipcMain.on('ping', () => console.log('pong'))
+
+  // Handle window close
+  ipcMain.on('close-window', () => {
+    const win = BrowserWindow.getFocusedWindow()
+    if (win) {
+      win.close()
+    }
+  })
 
   createWindow()
 
