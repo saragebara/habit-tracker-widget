@@ -94,7 +94,7 @@ export default function App() {
   const today = currentMonth === 0 ? new Date().getDate() : -1;
 
   const getCountForDay = (day: number): number => {
-    return monthData[day] || 0;
+    return monthData[day] ?? 0;
   };
 
   const getColorClass = (count: number): string => {
@@ -115,28 +115,27 @@ export default function App() {
   };
 
   const monthData = React.useMemo(() => {
-    const map: Record<number, number> = {};
+  const map: Record<number, number> = {};
 
-    for (const entry of heatmap) {
-      // entry.day = "YYYY-MM-DD"
-      const [y, m, d] = entry.day.split("-").map(Number);
+  for (const entry of heatmap) {
+    const [y, m, d] = entry.day.split("-").map(Number);
 
-      if (
-        y === year &&
-        m === month + 1 // month is 0-based
-      ) {
-        map[d] = entry.value;
-      }
+    if (y === year && m === month + 1) {
+      map[d] = entry.value;
     }
+  }
 
-    return map;
-  }, [heatmap, year, month]);
+  return map;
+}, [heatmap, year, month]);
 
   const calculateDailyAverage = () => {
     const daysInMonth = new Date(year, month + 1, 0).getDate();
     const totalCompleted = Object.values(monthData).reduce((sum, count) => sum + count, 0);
     return (totalCompleted / daysInMonth).toFixed(1);
   };
+
+  console.log("heatmap", heatmap);
+console.log("monthData", monthData);
 
   return (
     <div ref={appRef} className="habit-tracker">
