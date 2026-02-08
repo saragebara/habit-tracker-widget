@@ -1,9 +1,33 @@
 import React, { useState, useRef, useEffect } from "react";
-import { mockHabits, getHabitsForMonth } from "./storage";
+
+type HeatmapEntry = {
+  day: string;   // "YYYY-MM-DD"
+  value: number; // habits completed
+};
 
 export default function App() {
+  const [heatmap, setHeatmap] = useState<HeatmapEntry[]>([]);
+  const [loading, setLoading] = useState(true);
   const [currentMonth, setCurrentMonth] = useState(0);
   const [viewMode, setViewMode] = useState<'monthly' | 'weekly'>('monthly');
+
+  //Fetching backend
+  useEffect(() => {
+    async function loadHeatmap() {
+      try {
+        const res = await fetch("http://localhost:5050/api/heatmap");
+        const data: HeatmapEntry[] = await res.json();
+        setHeatmap(data);
+      } catch (err) {
+        console.error("Failed to load heatmap", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    loadHeatmap();
+  }, []);
+
 
   //Resizing window
   const appRef = useRef<HTMLDivElement>(null);
@@ -69,7 +93,23 @@ export default function App() {
 
   const dates = viewMode === 'monthly' ? getMonthDates() : getWeekDates();
   const today = currentMonth === 0 ? new Date().getDate() : -1;
-  const monthData = getHabitsForMonth(mockHabits, year, month);
+
+  const monthData = React.useMemo(() => {
+  const map: Record<number, number> = {};
+
+  for (const entry of heatmap) {
+    const date = new Date(entry.day);
+
+    if (
+      date.getFullYear() === year &&
+      date.getMonth() === month
+    ) {
+      map[date.getDate()] = entry.value;
+    }
+  }
+
+  return map;
+}, [heatmap, year, month]);
 
   const getCountForDay = (day: number): number => {
     return monthData[day] || 0;
