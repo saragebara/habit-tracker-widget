@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "t46Tx3IdyQQ=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\maria\\OneDrive\\Desktop\\WinHacks26\\HabbitWidgetBackend\\HabitWidgetApi\\HabitWidgetApi.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\maria\\.nuget\\packages\\dapper\\2.1.66\\dapper.2.1.66.nupkg.sha512",
+    "C:\\Users\\maria\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\9.0.0\\microsoft.extensions.dependencyinjection.abstractions.9.0.0.nupkg.sha512",
+    "C:\\Users\\maria\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\9.0.0\\microsoft.extensions.logging.abstractions.9.0.0.nupkg.sha512",
+    "C:\\Users\\maria\\.nuget\\packages\\npgsql\\10.0.1\\npgsql.10.0.1.nupkg.sha512"
+  ],
+  "logs": []
+}
