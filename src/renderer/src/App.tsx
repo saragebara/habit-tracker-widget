@@ -5,6 +5,7 @@ export default function App() {
   const [currentMonth, setCurrentMonth] = useState(0);
   const [viewMode, setViewMode] = useState<'monthly' | 'weekly'>('monthly');
 
+  //Resizing window
   const appRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (!appRef.current) return;
@@ -140,9 +141,13 @@ export default function App() {
               <div
                 key={`day-${day}-${index}`}
                 className={`calendar-cell ${colorClass} ${isToday ? 'today' : ''}`}
-                title={`${count} habit${count !== 1 ? 's' : ''} completed`}
               >
-              </div>
+                {count > 0 && ( //hover tooltip to show number completed
+                  <div className="tooltip">
+                    {count}
+                  </div>
+                )}
+              </div>  
             );
           })}
         </div>
